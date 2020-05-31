@@ -10,9 +10,17 @@ import InputRange from 'react-input-range';
 import "react-input-range/lib/css/index.css";
 import Pagination from "react-js-pagination";
 // require("bootstrap/less/bootstrap.less");
-
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
+import Loading from './Components/Loading'
 
 const apiKey = process.env.REACT_APP_API_KEY
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 function App() {
   // 2. create state
@@ -21,22 +29,23 @@ function App() {
     max: 10
   })
   let [tvList,setTvList] = useState(null)
-  let page = 0;
-  let pageSize = 12
+  let [originalList,setOriginalList] = useState(null)
   let [genreList, setGenreList] = useState([]); // empty array for genre
   let [showAllList, setShowAllList] = useState([]);
   let [activePage,setActivePage] = useState(1);
   let [totalPage,setTotalPage] = useState(0);
+  let [isShown,setIsShown] = useState(false);
 
   const getTvOnAir = async(page) => {
-      page++
-      let url=`https://api.themoviedb.org/3/tv/on_the_air?api_key=${apiKey}&language=en-US&page=${page}&pageSize=${pageSize}`
+      let url=`https://api.themoviedb.org/3/tv/on_the_air?api_key=${apiKey}&language=en-US&page=${page}`
       let data = await fetch(url)
       let result = await data.json();
       // 2.1
       setTvList(result.results)
+      setOriginalList(result.results) // backup tv list
       setShowAllList(result.results)
-      setTotalPage(result.total_pages);
+      setTotalPage(result.total_results);
+      console.log(result.total_pages);
       console.log("tv shows",result)
   }
 
@@ -67,7 +76,10 @@ function App() {
 
   // 3. so the comp doesn't show us null:
   if(tvList === null || genreList === null){
-    return (<div>Loading...</div>)
+    return (<div>
+
+      <Loading></Loading>
+    </div>)
   }
 
   const handlePageChange = (pageNumber) => {
@@ -76,13 +88,33 @@ function App() {
     getTvOnAir(pageNumber);
   }
 
+  const searchTheKeyword = (keyword) =>{
+    console.log("this is from the app",keyword)
+    if(keyword===''){
+      setTvList(originalList) // this will reset the TV list to original list if searchbox is empty
+      return;
+    }
+    //C.Q1 grab tv show list 
+    //C.Q2 grab each item from list 
+    //C.Q3 check if it includes that keyword
+    //C.Q4 if that includes that keyword, save into another array
+    //C.Q5 set that array into state so user can see => useState (tvShowList)
+    console.log("tv list",tvList)
+    let filteredList = tvList.filter(tv => tv.name.toLowerCase().includes(keyword.toLowerCase())) // use filter bc you want to see if something turns out to be true (returns an array). // you can use "includes" only for string! 
+    setTvList(filteredList)
+    //have to make it all lowercase so the search value doesn't have to exactly match -- add .toLowerCase before ".includes" and after keyword
+
+}
+
+
+
 
   return (
     <Router>
       
     <>
     <div className="nav-bar">
-      <NavbarTop></NavbarTop>
+      <NavbarTop searchTheKeywordProps={searchTheKeyword}></NavbarTop>
     </div>
     {/* <Switch> */}
     <Landing></Landing>
@@ -101,15 +133,26 @@ function App() {
       </ul>
     </div> */}
     <Container>
-      <Row>
-        <Col xs={2}>
+      <Row className="sidebar-row">
+        <Col xs={2} className="sidebar-col">
+          <button
+          onMouseEnter={() => setIsShown(true)}
+          onMouseLeave={() => setIsShown(false)}>
+          Hover over me!
+          </button>
+          {isShown && (
+            <div>
+              I'll appear when you hover over the button.
+            </div>
+          )}
           <div className="sidebar-div">
           <h3>Search by Rating</h3>
             <InputRange
-              maxValue={20}
+              maxValue={10}
               minValue={0}
               value={sliderValue}
               onChange={value => setSliderValue(value)} />
+            <br></br>
             <h3>Search by Genre</h3>
             <ul>{genreList.map(elm =>{ return (
               <li><a href="#" onClick={()=>searchByGenre(elm.id)}>{elm.name}</a></li>)
@@ -119,11 +162,13 @@ function App() {
         </Col>
         <Col>
           <TVList tvList = {tvList} genresFromApp={genreList}></TVList>
-          <Pagination
+          <Pagination className="pagination"
+            itemClass="page-item"
+            linkClass="page-link"
             activePage={activePage}
-            itemsCountPerPage={10}
+            itemsCountPerPage={20}
             totalItemsCount={totalPage}
-            pageRangeDisplayed={5}
+            pageRangeDisplayed={10}
             onChange={handlePageChange}
           />
         </Col>

@@ -12,7 +12,7 @@ export default function TVList(props) {
             {/* 2.2 this is an array, so we need to .map it. comp is now saying that .map is undefined/null */}
             {props.tvList.map(item=>{return(
                 // <div>{item.original_title}</div>
-                <Col lg="6"><TVCard tv={item} genresFromTvList={props.genresFromApp}></TVCard></Col> // tv and genreList are props that are being passed
+                <Col md="4"><TVCard tv={item} genresFromTvList={props.genresFromApp}></TVCard></Col> // tv and genreList are props that are being passed
                 
             )})}
             </Row>

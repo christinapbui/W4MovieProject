@@ -44,3 +44,26 @@
 .genre-badge{
   margin-right: 5px;
 }
+.pagination {
+  padding-right: 3px;
+}
+.tvshow-row{
+  margin-top: 40px;
+}
+
+.sidebar-div{
+  margin-top: 40px;
+  background-color: lightgray;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 6px 0 rgba(0, 0, 0, 0.19);
+}
+
+ul{
+  list-style: none;
+  text-align: left;
+  padding: 0;
+}
