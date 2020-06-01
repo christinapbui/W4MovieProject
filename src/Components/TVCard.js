@@ -38,7 +38,7 @@ export default function TVCard(props) {
                         </ListGroup>
                         <Card.Body>
                             <Card.Link><a href={`https://www.themoviedb.org/tv/${tvProps.id}?language=en-US`} target="_blank">More Info</a></Card.Link>
-                            {/* <Card.Link><a href="#" onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>Details of Show</a></Card.Link> */}
+                            <Card.Link><a href="#" onClick={()=>props.openModal()}>Watch Trailer</a></Card.Link>
                         </Card.Body>
                     </Card>
                 </div>

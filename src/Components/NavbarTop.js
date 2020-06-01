@@ -25,6 +25,13 @@ export default function NavbarTop(props) {
                 <Nav.Link href="#home">Home</Nav.Link>
                 <Nav.Link href="#features">On Air</Nav.Link>
                 <Nav.Link href="#pricing">Popular</Nav.Link>
+                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#action/3.1" onClick={()=>props.sortByVoteAsce}>Sort by vote (ascend)</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.2" onClick={()=>props.sortByVoteDesc}>SOrt by vote (descend)</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                </NavDropdown>
                 </Nav>
                 <Form inline onSubmit={(e)=>searchByKeyword(e)}>
                 <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={(e)=>keyword=e.target.value}/>

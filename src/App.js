@@ -13,6 +13,8 @@ import Pagination from "react-js-pagination";
 import { css } from "@emotion/core";
 import ClipLoader from "react-spinners/ClipLoader";
 import Loading from './Components/Loading'
+import ReactModal from 'react-modal';
+
 
 const apiKey = process.env.REACT_APP_API_KEY
 
@@ -34,6 +36,7 @@ function App() {
   let [showAllList, setShowAllList] = useState([]);
   let [activePage,setActivePage] = useState(1);
   let [totalPage,setTotalPage] = useState(0);
+  let [modalOpen,setModalOpen] = useState(true);
 
   const getTvOnAir = async(page) => {
       let url=`https://api.themoviedb.org/3/tv/on_the_air?api_key=${apiKey}&language=en-US&page=${page}`
@@ -105,15 +108,33 @@ function App() {
 
   }
 
+  //D. Modals
+  const closeModal = () =>{
+    //D.1 change to close modal
+    setModalOpen(false)
+  }
 
+  //D.2 open modal when clicking on picture
+  const openModal = () =>{
+    setModalOpen(true)
+  }
 
+  const sortByVoteDesc = () => {
+    const sortedVoteDesc = originalList.sort((a,b)=>b.vote_average - a.vote_average)
+    setTvList([...sortedVoteDesc]) // the ... means it's a new array
+  }
+
+  const sortByVoteAsce = () => {
+    const sortedVoteAsce = originalList.sort((a,b)=>a.vote_average - b.vote_average)
+    setTvList([...sortedVoteAsce])
+  }
 
   return (
     <Router>
       
     <>
     <div className="nav-bar">
-      <NavbarTop searchTheKeywordProps={searchTheKeyword}></NavbarTop>
+      <NavbarTop searchTheKeywordProps={searchTheKeyword} sortByVoteAsce={sortByVoteAsce} sortByVoteDesc={sortByVoteDesc}></NavbarTop>
     </div>
     {/* <Switch> */}
     <Landing></Landing>
@@ -149,8 +170,14 @@ function App() {
           </div>
         </Col>
         <Col>
-          <TVList tvList = {tvList} genresFromApp={genreList}>
+          <TVList 
+            tvList = {tvList} 
+            genresFromApp={genreList}
+            openModal = {openModal}>
           </TVList>
+          <ReactModal isOpen={modalOpen}>
+            <button onClick={()=>closeModal()}>Close</button>
+            React Modal</ReactModal>
           <Pagination className="pagination"
             itemClass="page-item"
             linkClass="page-link"
