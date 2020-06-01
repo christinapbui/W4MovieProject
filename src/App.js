@@ -16,7 +16,7 @@ import Loading from './Components/Loading'
 import Modal from 'react-modal';
 import ReactModal from 'react-modal';
 
-const apiKey = REACT_APP_API_KEY
+const apiKey = process.env.REACT_APP_API_KEY
 
 const override = css`
   display: block;
@@ -50,7 +50,6 @@ function App() {
       setShowAllList(result.results)
       setTotalPage(result.total_results);
       console.log(result.total_pages);
-      console.log("tv shows",result)
   }
 
   // A. search by category (genre)
@@ -131,6 +130,7 @@ function App() {
     setTvList([...sortedVoteAsce])
   }
 
+
   return (
     <Router>
       
@@ -177,9 +177,12 @@ function App() {
             genresFromApp={genreList}
             openModal = {openModal}>
           </TVList>
-          <ReactModal isOpen={modalOpen}>
+          {/* <ReactModal 
+          isOpen={modalOpen}
+          closeTimeOutMS={1000}
+          style={modalStyles}>
             <button onClick={()=>closeModal()}>Close</button>
-            React Modal</ReactModal>
+            React Modal</ReactModal> */}
           <Pagination className="pagination"
             itemClass="page-item"
             linkClass="page-link"

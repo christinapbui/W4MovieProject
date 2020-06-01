@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navbar,Nav,Form,FormControl,Button} from 'react-bootstrap'
+import {Navbar,Nav,Form,FormControl,Button, NavDropdown} from 'react-bootstrap'
 
 //B. search function
   //B.Q1 how to read the value?
@@ -28,9 +28,6 @@ export default function NavbarTop(props) {
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1" onClick={()=>props.sortByVoteAsce}>Sort by vote (ascend)</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.2" onClick={()=>props.sortByVoteDesc}>SOrt by vote (descend)</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                 </NavDropdown>
                 </Nav>
                 <Form inline onSubmit={(e)=>searchByKeyword(e)}>
