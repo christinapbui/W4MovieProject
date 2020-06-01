@@ -7,7 +7,9 @@ export default function TVList(props) {
     // 3.1
     
     return (
-        <Container>
+        <Container className="tvshow-container">
+            <Row className="tvshow-row-title"><h1>On Air</h1>
+            </Row>
             <Row className="tvshow-row">
             {/* 2.2 this is an array, so we need to .map it. comp is now saying that .map is undefined/null */}
             {props.tvList.map(item=>{return(

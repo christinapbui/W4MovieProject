@@ -34,7 +34,6 @@ function App() {
   let [showAllList, setShowAllList] = useState([]);
   let [activePage,setActivePage] = useState(1);
   let [totalPage,setTotalPage] = useState(0);
-  let [isShown,setIsShown] = useState(false);
 
   const getTvOnAir = async(page) => {
       let url=`https://api.themoviedb.org/3/tv/on_the_air?api_key=${apiKey}&language=en-US&page=${page}`
@@ -104,7 +103,7 @@ function App() {
     setTvList(filteredList)
     //have to make it all lowercase so the search value doesn't have to exactly match -- add .toLowerCase before ".includes" and after keyword
 
-}
+  }
 
 
 
@@ -135,25 +134,14 @@ function App() {
     <Container>
       <Row className="sidebar-row">
         <Col xs={2} className="sidebar-col">
-          <button
-          onMouseEnter={() => setIsShown(true)}
-          onMouseLeave={() => setIsShown(false)}>
-          Hover over me!
-          </button>
-          {isShown && (
-            <div>
-              I'll appear when you hover over the button.
-            </div>
-          )}
           <div className="sidebar-div">
-          <h3>Search by Rating</h3>
+          <h3 className="search-by-rating-h3">Search by Rating</h3>
             <InputRange
               maxValue={10}
               minValue={0}
               value={sliderValue}
               onChange={value => setSliderValue(value)} />
-            <br></br>
-            <h3>Search by Genre</h3>
+            <h3 className="search-by-genre-h3">Search by Genre</h3>
             <ul>{genreList.map(elm =>{ return (
               <li><a href="#" onClick={()=>searchByGenre(elm.id)}>{elm.name}</a></li>)
             })}
@@ -161,7 +149,8 @@ function App() {
           </div>
         </Col>
         <Col>
-          <TVList tvList = {tvList} genresFromApp={genreList}></TVList>
+          <TVList tvList = {tvList} genresFromApp={genreList}>
+          </TVList>
           <Pagination className="pagination"
             itemClass="page-item"
             linkClass="page-link"

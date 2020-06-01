@@ -20,7 +20,7 @@ export default function NavbarTop(props) {
     return (
         <>
             <Navbar bg="dark" variant="dark" fixed="top">
-                <Navbar.Brand href="#home">[LOGO]</Navbar.Brand>
+                <Navbar.Brand href="#home">[boredTV]</Navbar.Brand>
                 <Nav className="mr-auto">
                 <Nav.Link href="#home">Home</Nav.Link>
                 <Nav.Link href="#features">On Air</Nav.Link>
