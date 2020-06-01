@@ -87,3 +87,20 @@ ul{
   justify-content: center;
   margin-top: 20px;
 }
+
+
+.TvCard-watch-trailer {
+  color: teal !important;
+}
+
+.VideoPopup-youtube {
+  width: 600px;
+  height: 400px;
+  margin-top: 20px;
+}
+
+.VideoPopup-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

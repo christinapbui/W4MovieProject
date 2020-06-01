@@ -13,14 +13,17 @@ import Pagination from "react-js-pagination";
 import { css } from "@emotion/core";
 import ClipLoader from "react-spinners/ClipLoader";
 import Loading from './Components/Loading'
+import Modal from 'react-modal';
 
-const apiKey = process.env.REACT_APP_API_KEY
+const apiKey = '14571cc48a09b723f51bd74640df3d50'
 
 const override = css`
   display: block;
   margin: 0 auto;
   border-color: red;
 `;
+
+Modal.setAppElement('#root')
 
 function App() {
   // 2. create state
